@@ -22,7 +22,7 @@ app.use("/admin", categoryRoutes);    // for /admin/categories
 //connect mongoose to your mongoDB_URL
 const PORT = process.env.PORT || 5000
 
-
+//connection
 mongoose.connect(process.env.MONGODB_URL).then(() => {
   console.log("mongoDB connected...");
   app.listen(PORT, () => {
