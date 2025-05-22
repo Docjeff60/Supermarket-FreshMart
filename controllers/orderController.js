@@ -17,8 +17,8 @@ exports.placeOrder = async (req, res) => {
         //loop through the items and calculate total
         let total = 0;
         for (let item of items) {
-            const product = await Product.findById(items.product);
-            if (!product) return res.status(404).json({message: "Product not found"});
+            const product = await Product.findById(item.product);
+            if (!product) return res.status(404).json({message: `Product not found: ${item.product}`});
 
             total += product.price * item.quantity;
         }
