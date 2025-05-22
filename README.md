@@ -40,3 +40,26 @@ Milestone 1: Authentication & Product Catalog
 3.Create Category & Product schemas.
 
 4.Admin can create categories and products.
+
+
+
+
+
+
+
+MILESTONE 2 - PROJECT 2: Supermarket E-Commerce Backend (FreshMart)
+
+
+Milestone 2: Product Browsing & Orders
+
+
+
+1.Users can browse products and view product details.
+
+
+
+2.Users can place orders with multiple items.
+
+
+
+3.Create Order schema with order summary logic.
