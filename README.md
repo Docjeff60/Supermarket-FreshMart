@@ -64,3 +64,21 @@ Milestone 2: Product Browsing & Orders
 
 3.Create Order schema with order summary logic.
 
+
+
+
+
+
+MILESTONE 3 - PROJECT 2: Supermarket E-Commerce Backend (FreshMart)
+
+Milestone 3: Order Management & Refinement
+
+
+
+Users can view their past orders.
+
+
+Add basic validation (e.g., stock availability).
+
+
+Add product stock update after order.
