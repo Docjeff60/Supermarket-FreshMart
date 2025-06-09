@@ -60,7 +60,7 @@ exports.placeOrder = async (req, res) => {
 //Get orders for a user
 exports.getUserOrders = async (req, res) => {
     try {
-        const orders = await Orders.find({user: req.user.id}).populate("items.product", "name price");
+        const orders = await Order.find({user: req.user.id}).populate("items.product", "name price");
         
         res.status(200).json({message: "Here are your orders:", orders});
 
