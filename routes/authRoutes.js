@@ -6,7 +6,9 @@ const { sendForgotPasswordEmail, validEmail } = require("../utils/sendForgotPass
 
 router.post("/register", register);
 router.post("/login", login);
-router.post("/forgot-password", sendForgotPasswordEmail);
-router.post("/reset-password/:token", validEmail);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
+
 
 module.exports = router;
+
