@@ -3,43 +3,34 @@ const nodemailer = require("nodemailer")
 
 
 
-exports.sendForgotPasswordEmail = async ( email, token )=>{
-    
-    try {
-        const mailTransport = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: `${process.env.EMAIL}`,
-                pass: `${process.env.EMAIL_PASSWORD}`
-            }
-        })
-    
-        const mailDetails = {
-            from: `${process.env.EMAIL}`,
-            to: `${email}`,
-            subject: "Reset Password Notification",
-            html: `<h1>Here is the token to reset you password please click on the button,
-            
-            <a class"" href='https://www.yourcareerex.com/reset-password/${token}'>Reset Password </a>
+exports.sendForgotPasswordEmail = async (email, token) => {
+  try {
+    const mailTransport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,          // use process.env without ${}
+        pass: process.env.EMAIL_PASSWORD, // same here
+      },
+    });
 
-            if the button does not work for any reason, please click the link below
+    const mailDetails = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: "Reset Password Notification",
+      html: `
+        <h1>Here is the token to reset your password, please click on the button below:</h1>
+        <a href="https://www.yourcareerex.com/reset-password/${token}">Reset Password</a>
+        <p>If the button does not work, please click the link below:</p>
+        <a href="https://www.yourcareerex.com/reset-password/${token}">${token}</a>
+      `,
+    };
 
-             <a href='https://www.yourcareerex.com/reset-password/${token}'>Reset Password </a>
-
-            
-            
-            ${token}
-            
-            </h1>`
-        }
-    
-        await mailTransport.sendMail(mailDetails)
-        
-    } catch (error) {
-        console.log(error)
-    }
-
-}
+    await mailTransport.sendMail(mailDetails);
+    console.log("Email sent successfully!");
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+};
 
 
 exports.validEmail = (email) => {

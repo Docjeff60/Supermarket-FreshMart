@@ -121,7 +121,7 @@ exports.login = async (req, res) => {
   //forget password (send reset email)
 exports.forgotPassword = async (req, res) => {
   try {
-    const {email, userName} = req.body;
+    const {email} = req.body;
 
     const user = await Auth.findOne({email});
 
@@ -130,12 +130,12 @@ exports.forgotPassword = async (req, res) => {
     }
 
     //send the user an email with their token
-    const accessToken = await jwt.sign(
-        {user},
-        `${process.env.ACCESS_TOKEN}`,
-        { expiresIn: "5m"}
+    const accessToken = jwt.sign(
+        { id: user._id },
+        process.env.ACCESS_TOKEN,
+        { expiresIn: "5m" }
 
-    )
+    );
 
     await sendForgotPasswordEmail(email, accessToken)
 
@@ -153,25 +153,27 @@ exports.forgotPassword = async (req, res) => {
 
 // Reset password using token
 exports.resetPassword = async (req, res) => {
-    try{
+  try {
+    const { password } = req.body;
+    const token = req.headers.authorization?.split(" ")[1];
 
-        const {email, password} = req.body;
-
-        const user = await Auth.findOne({email})
-
-        if(user){
-            return res.status(404).json({message: "User account not found"})
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 12)
-
-        user.password = hashedPassword
-
-        await user.save()
-
-        res.status(200).json({message: "Password reset successful."})
-
-    }catch(error){
-        res.status(500).json({ message: "Failed to send reset password", error });
+    if (!token) {
+      return res.status(400).json({ message: "Token missing" });
     }
+
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN);
+    const user = await Auth.findById(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User account not found" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successful." });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to reset password", error });
+  }
 };
