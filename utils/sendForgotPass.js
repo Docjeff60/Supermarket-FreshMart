@@ -1,9 +1,8 @@
 
-const nodemailer = require("nodemailer")
-
-
-
 const nodemailer = require("nodemailer");
+
+
+
 
 exports.sendForgotPasswordEmail = async (email, token) => {
   try {
