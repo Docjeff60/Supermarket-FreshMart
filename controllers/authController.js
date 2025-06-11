@@ -123,7 +123,7 @@ exports.forgotPassword = async (req, res) => {
   try {
     const {email} = req.body;
 
-    const user = await Auth.findOne({email});
+    const user = await User.findOne({email});
 
     if (!user) {
         return res.status(404).json({meassage: "User not found."});
@@ -166,7 +166,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN);
-    const user = await Auth.findById(decoded.id);
+    const user = await User.findById(decoded.id);
 
     if (!user) {
       return res.status(404).json({ message: "User account not found" });
