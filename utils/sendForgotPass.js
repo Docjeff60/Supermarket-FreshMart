@@ -3,32 +3,37 @@ const nodemailer = require("nodemailer")
 
 
 
+const nodemailer = require("nodemailer");
+
 exports.sendForgotPasswordEmail = async (email, token) => {
   try {
-    const mailTransport = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL,          // use process.env without ${}
-        pass: process.env.EMAIL_PASSWORD, // same here
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
 
-    const mailDetails = {
+    const mailOptions = {
       from: process.env.EMAIL,
       to: email,
       subject: "Reset Password Notification",
       html: `
-        <h1>Here is the token to reset your password, please click on the button below:</h1>
+        <h2>Reset your password</h2>
+        <p>Click the link below to reset your password:</p>
         <a href="https://www.yourcareerex.com/reset-password/${token}">Reset Password</a>
-        <p>If the button does not work, please click the link below:</p>
-        <a href="https://www.yourcareerex.com/reset-password/${token}">${token}</a>
+        <p>If the link doesn't work, copy and paste this URL:</p>
+        <p>https://www.yourcareerex.com/reset-password/${token}</p>
+        <p>This link will expire in 5 minutes.</p>
       `,
     };
 
-    await mailTransport.sendMail(mailDetails);
-    console.log("Email sent successfully!");
+    await transporter.sendMail(mailOptions);
+    console.log("Email sent to", email);
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Email sending error:", error); // Helpful for debugging
+    throw error;
   }
 };
 
