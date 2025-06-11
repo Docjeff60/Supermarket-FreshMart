@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { sendForgotPasswordEmail } = require("../utils/sendForgotPass");
+const { sendWelcomeEmail } = require("../utils/sendWelcomeEmail");
 
 
 
@@ -41,6 +42,10 @@ exports.register = async (req, res) => {
         })
 
         await newUser.save();
+
+
+        //send welcome email
+        await sendWelcomeEmail(email, `${firstName} ${lastName}`);
 
  
 

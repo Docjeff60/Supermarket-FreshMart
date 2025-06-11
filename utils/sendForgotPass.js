@@ -21,9 +21,9 @@ exports.sendForgotPasswordEmail = async (email, token) => {
       html: `
         <h2>Reset your password</h2>
         <p>Click the link below to reset your password:</p>
-        <a href="https://www.yourcareerex.com/reset-password/${token}">Reset Password</a>
+        <a href="https://supermarket-freshmart.onrender.com/reset-password/${token}">Reset Password</a>
         <p>If the link doesn't work, copy and paste this URL:</p>
-        <p>https://www.yourcareerex.com/reset-password/${token}</p>
+        <p>https://supermarket-freshmart.onrender.com/reset-password/${token}</p>
         <p>This link will expire in 5 minutes.</p>
       `,
     };
